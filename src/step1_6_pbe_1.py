@@ -8,7 +8,7 @@ from tqdm import tqdm
 sys.path.append(os.path.join(os.environ['HOME'],'Working/interaction/'))
 from make_pbebj import exec_gjf##計算した点のxyzfileを出す
 from vdw_6_xyz import vdw_R##同様
-from utils import get_E
+from utils import get_E0
 import argparse
 import numpy as np
 from scipy import signal
@@ -89,7 +89,7 @@ def listen(auto_dir,monomer_name,num_nodes,isTest):##args自体を引数に取�
         log_filepath = os.path.join(*[auto_dir,'gaussian',file_name])
         if not(os.path.exists(log_filepath)):#logファイルが生成される直前だとまずいので
             continue
-        E_list=get_E(log_filepath)
+        E_list=get_E0(log_filepath)
         if len(E_list)!=2:##get Eの長さは計算した分子の数
             continue
         else:
