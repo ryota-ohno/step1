@@ -26,7 +26,7 @@ def get_monomer_xyzR(monomer_name,Ta,Tb,Tc,A1,A2,A3,phi=0.0,isFF=False):
     
     elif monomer_name=='mono-C9-BTBT':
         #alkylの基準
-        C0_index = 16 #BTBT骨格の端
+        C0_index = 13 #BTBT骨格の端
         C1_index = 23 #アルキルの根本
         
         C0=xyz_array[C0_index]
@@ -164,7 +164,7 @@ def make_gaussview_xyz(auto_dir,monomer_name,params_dict,isInterlayer=False):
 def make_gjf_xyz(auto_dir,monomer_name,params_dict,machine_type,isInterlayer):
     a_ = params_dict['a']; b_ = params_dict['b']; c = np.array([params_dict['cx'],params_dict['cy'],params_dict['cz']])
     A1 = params_dict['A1']; A2 = params_dict['A2']; A3 = params_dict['theta']
-    phi1 = params_dict.get('phi1',0.0); phi2 = params_dict.get('phi2',0.0)
+    phi1 = params_dict.get('phi1',0.0); phi2 = -phi1
     print(phi1, phi2)
     
     monomer_array_i = get_monomer_xyzR(monomer_name,0,0,0,A1,A2,A3, phi1)
@@ -222,7 +222,7 @@ def make_gjf_xyz(auto_dir,monomer_name,params_dict,machine_type,isInterlayer):
     elif monomer_name in MONOMER_LIST and isInterlayer:
         gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_i0 + ['\n\n--Link1--\n'] + line_list_dimer_ip1+ ['\n\n--Link1--\n'] + line_list_dimer_ip2+ ['\n\n--Link1--\n'] + line_list_dimer_it1 + ['\n\n--Link1--\n'] + line_list_dimer_it2 + ['\n\n\n']#['\n\n--Link1--\n'] + line_list_dimer_it3 + ['\n\n--Link1--\n'] + line_list_dimer_it4 + ['\n\n\n']
     elif monomer_name=='mono-C9-BTBT':
-        gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_p1 + ['\n\n--Link1--\n'] + line_list_dimer_t1 + ['\n\n--Link1--\n'] + line_list_dimer_t2 + ['\n\n--Link1--\n'] + line_list_dimer_t3 + ['\n\n--Link1--\n'] + line_list_dimer_t4 + ['\n\n\n']
+        gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_p1 + ['\n\n--Link1--\n'] + line_list_dimer_t1 + ['\n\n--Link1--\n'] + line_list_dimer_t3 + ['\n\n\n']#+ ['\n\n--Link1--\n'] + line_list_dimer_t3 + ['\n\n--Link1--\n'] + line_list_dimer_t4 + ['\n\n\n']
     
     file_name = get_file_name_from_dict(monomer_name,params_dict)
     inp_dir = os.path.join(auto_dir,'gaussian')
