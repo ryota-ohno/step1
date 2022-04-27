@@ -28,7 +28,7 @@ def get_E_mono_1(path_file):
     for line in lines:
         if line.find('E(R')>-1 and len(line.split())>5:
             lines_E.append(float(line.split()[4])*627.510)
-    E = lines_E[-1]+1058790
+    E = lines_E[-2]+1058790
     return E
 
 def get_E_mono_2(path_file):
@@ -38,7 +38,7 @@ def get_E_mono_2(path_file):
     for line in lines:
         if line.find('E(R')>-1 and len(line.split())>5:
             lines_E.append(float(line.split()[4])*627.510)
-    E = lines_E[-2]+1058790
+    E = lines_E[-1]+1058790
     return E
 
 def squeeze_min_df_E(df_E,columns=['A1','A2']):
