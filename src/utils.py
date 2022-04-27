@@ -48,7 +48,6 @@ def get_E_len(path_file):
     for line in lines:
         if line.find('E(R')>-1 and len(line.split())>5:
             lines_E.append(float(line.split()[4])*627.510)
-    E = lines_E[-1]+1058790
     return len(lines_E)
 
 def squeeze_min_df_E(df_E,columns=['A1','A2']):
