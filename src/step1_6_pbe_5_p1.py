@@ -101,7 +101,7 @@ def listen(auto_dir,monomer_name,num_nodes,isTest):##args自体を引数に取�
         if not(os.path.exists(log_filepath)):#logファイルが生成される直前だとまずいので
             continue
         E_list=get_E0(log_filepath)
-        if len(E_list)!=4:##get Eの長さは計算した分子の数
+        if len(E_list)!=6:##get Eの長さは計算した分子の数
             continue
         else:
             len_queue-=1;machine_type_list.remove(machine_type)
