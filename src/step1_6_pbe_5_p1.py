@@ -11,6 +11,7 @@ from vdw_6_xyz import vdw_R##同様
 from utils import get_E0
 from utils import get_E_mono_1
 from utils import get_E_mono_2
+from utils import get_E_len
 import argparse
 import numpy as np
 from scipy import signal
@@ -101,7 +102,8 @@ def listen(auto_dir,monomer_name,num_nodes,isTest):##args自体を引数に取�
         if not(os.path.exists(log_filepath)):#logファイルが生成される直前だとまずいので
             continue
         E_list=get_E0(log_filepath)
-        if len(E_list)!=6:##get Eの長さは計算した分子の数
+        E_len=get_E_len(log_filepath)
+        if E_len !=32:##get Eの長さは計算した分子の数
             continue
         else:
             len_queue-=1;machine_type_list.remove(machine_type)
