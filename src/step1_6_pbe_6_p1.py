@@ -78,7 +78,7 @@ def main_process(args):
     os.makedirs(os.path.join(auto_dir,'gaussview'), exist_ok=True)
     auto_csv_path = os.path.join(auto_dir,'step1.csv')
     if not os.path.exists(auto_csv_path):        
-        df_E = pd.DataFrame(columns = ['a','b','theta','A1','A2','phi1','phi2','E','E_p1','E_p2','E_t1','E_t2','E_t3','E_t4','E_m1','E_m2','machine_type','status','file_name'])##いじる
+        df_E = pd.DataFrame(columns = ['a','b','theta','R3','R4','phi1','phi2','E','E_p1','E_p2','E_t1','E_t2','E_t3','E_t4','E_m1','E_m2','machine_type','status','file_name'])##いじる
         df_E.to_csv(auto_csv_path,index=False)##step3を二段階でやる場合二段階目ではinitをやらないので念のためmainにも組み込んでおく
 
     os.chdir(os.path.join(args.auto_dir,'gaussian'))
@@ -154,7 +154,7 @@ def get_params_dict(auto_dir, num_nodes):
     df_init_params = pd.read_csv(init_params_csv)
     df_cur = pd.read_csv(os.path.join(auto_dir, 'step1.csv'))
     df_init_params_inprogress = df_init_params[df_init_params['status']=='InProgress']
-    fixed_param_keys = ['theta','A1','A2','phi1','phi2']
+    fixed_param_keys = ['theta','R3','R4','phi1','phi2']
     opt_param_keys = ['a','b']
 
     #最初の立ち上がり時
