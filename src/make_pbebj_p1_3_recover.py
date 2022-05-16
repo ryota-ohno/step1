@@ -241,7 +241,7 @@ def make_gjf_xyz(auto_dir,monomer_name,params_dict,machine_type,isInterlayer):
     monomer_array_i2 = get_monomer_xyzR_(monomer_name,0,0,0,-A1,A2,-A3, phi2)
     if b_>a_:
         monomer_array_p1 = get_monomer_xyzR(monomer_name,a_,0,R5,A1,A2,A3, phi1)
-        monomer_array_p2 = get_monomer_xyzR_(monomer_name,a_,0,R5,-A1,A2,-A3, phi2)
+        monomer_array_p2 = get_monomer_xyzR(monomer_name,a_,0,R5,-A1,A2,-A3, phi2)
         monomer_array_ip1 = get_monomer_xyzR(monomer_name,c[0]+a_,c[1],c[2],A1,A2,A3, phi1)
         monomer_array_ip2 = get_monomer_xyzR(monomer_name,c[0]-a_,c[1],c[2],A1,A2,A3, phi1)
         
@@ -299,7 +299,7 @@ def make_gjf_xyz(auto_dir,monomer_name,params_dict,machine_type,isInterlayer):
     elif monomer_name in MONOMER_LIST and isInterlayer:
         gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_i0 + ['\n\n--Link1--\n'] + line_list_dimer_ip1+ ['\n\n--Link1--\n'] + line_list_dimer_ip2+ ['\n\n--Link1--\n'] + line_list_dimer_it1 + ['\n\n--Link1--\n'] + line_list_dimer_it2 + ['\n\n\n']#['\n\n--Link1--\n'] + line_list_dimer_it3 + ['\n\n--Link1--\n'] + line_list_dimer_it4 + ['\n\n\n']
     elif monomer_name=='mono-C9-BTBT':
-        gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_p1 + ['\n\n--Link1--\n'] + line_list_dimer_p2 + ['\n\n--Link1--\n'] + line_list_dimer_t1 + ['\n\n--Link1--\n'] + line_list_dimer_t2 + ['\n\n--Link1--\n'] + line_list_dimer_t3 + ['\n\n--Link1--\n'] + line_list_dimer_t4 + ['\n\n--Link1--\n'] + line_list_monomer_i1 + ['\n\n--Link1--\n'] + line_list_monomer_i2 + ['\n\n\n']#+ ['\n\n--Link1--\n'] + line_list_dimer_t3 + ['\n\n--Link1--\n'] + line_list_dimer_t4 + ['\n\n\n']
+        gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_p2 + ['\n\n\n']#+ ['\n\n--Link1--\n'] + line_list_dimer_t3 + ['\n\n--Link1--\n'] + line_list_dimer_t4 + ['\n\n\n']
     
     file_name = get_file_name_from_dict(monomer_name,params_dict)
     inp_dir = os.path.join(auto_dir,'gaussian')
