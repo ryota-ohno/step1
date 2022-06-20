@@ -211,7 +211,7 @@ def make_gjf_xyz(auto_dir,monomer_name,params_dict,machine_type,isInterlayer):
     phi1 = params_dict.get('phi1',0.0); phi2 = -phi1; phib = params_dict.get('phib',0.0)
     print(phi1, phi2)
     
-    monomer_array_i = get_monomer_xyzR(monomer_name,0,0,0,A1,A2,A3, phi1)
+    monomer_array_i = get_monomer_xyzR(monomer_name,0,0,0,A1,A2,A3, phi1,phib)
     if b_>a_:
         monomer_array_p1 = get_monomer_xyzR(monomer_name,a_,0,0,A1,A2,A3, phi1,phib)
         monomer_array_ip1 = get_monomer_xyzR(monomer_name,c[0]+a_,c[1],c[2],A1,A2,A3, phi1,phib)
