@@ -162,8 +162,8 @@ def get_params_dict(auto_dir, num_nodes):
             return params_dict
     for index in df_init_params.index:
         df_init_params = pd.read_csv(init_params_csv)
-        print('index')
-        print(index)
+        #print('index')
+        #print(index)
         init_params_dict = df_init_params.loc[index,fixed_param_keys+opt_param_keys].to_dict()
         fixed_params_dict = df_init_params.loc[index,fixed_param_keys].to_dict()
         isDone, opt_params_dict = get_opt_params_dict(df_cur, init_params_dict,fixed_params_dict)
@@ -183,7 +183,6 @@ def get_params_dict(auto_dir, num_nodes):
                 return {**fixed_params_dict,**opt_params_dict}
             else:
                 continue
-
         else:
             df_inprogress = filter_df(df_cur, {**fixed_params_dict,**opt_params_dict,'status':'InProgress'})
             print(df_inprogress)
@@ -219,13 +218,12 @@ def update_value_in_df(df,index,key,value):
     return df
 
 def filter_df(df, dict_filter):
-    query = []
     for k, v in dict_filter.items():
         if type(v)==str:
-            query.append('{} == "{}"'.format(k,v))
+            df=df[df[k]==v]
         else:
-            query.append('{} == {}'.format(k,v))
-    df_filtered = df.query(' and '.join(query))
+            df=df[df[k]==v]
+    df_filtered=df
     return df_filtered
 
 if __name__ == '__main__':
