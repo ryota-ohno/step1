@@ -25,11 +25,15 @@ def get_monomer_xyzR(monomer_name,Ta,Tb,Tc,A2,A3):
     else:
         raise RuntimeError('invalid monomer_name={}'.format(monomer_name))
         
-def get_xyzR_lines(xyzR_array,file_description):
+def get_xyzR_lines(xyzR_array,file_description,machine_type):
+    if machine_type==1:
+        mp_num = 40
+    elif machine_type==2:
+        mp_num = 52
     lines = [     
-        '%mem=15GB\n',
-        '%nproc=40\n',
-        '#P TEST b3lyp/6-311G** EmpiricalDispersion=GD3 counterpoise=2\n',
+        '%mem=25GB\n',
+        f'%nproc={mp_num}\n',
+        '#P TEST pbepbe/6-311G** EmpiricalDispersion=GD3BJ counterpoise=2\n',
         '\n',
         file_description+'\n',
         '\n',
@@ -119,7 +123,7 @@ def make_xyz(monomer_name,params_dict):
         xyzfile_name += '_{}={}'.format(key,val)
     return xyzfile_name + '.xyz'
 
-def make_gjf_xyz(auto_dir,monomer_name,params_dict):
+def make_gjf_xyz(auto_dir,monomer_name,params_dict,machine_type):
     a_ = params_dict['a']; b_ = params_dict['b']; c = np.array([params_dict.get('cx',0.0),params_dict.get('cy',0.0),params_dict.get('cz',0.0)])
     A2 = params_dict.get('A2',0.0); A3 = params_dict['theta']
     
@@ -136,9 +140,9 @@ def make_gjf_xyz(auto_dir,monomer_name,params_dict):
     dimer_array_p2 = np.concatenate([monomer_array_i,monomer_array_p2])
     
     file_description = '{}_A2={}_A3={}'.format(monomer_name,int(A2),round(A3,2))
-    line_list_dimer_p1 = get_xyzR_lines(dimer_array_p1,file_description+'_p1')
-    line_list_dimer_p2 = get_xyzR_lines(dimer_array_p2,file_description+'_p2')
-    line_list_dimer_t1 = get_xyzR_lines(dimer_array_t1,file_description+'_t1')
+    line_list_dimer_p1 = get_xyzR_lines(dimer_array_p1,file_description+'_p1',machine_type)
+    line_list_dimer_p2 = get_xyzR_lines(dimer_array_p2,file_description+'_p2',machine_type)
+    line_list_dimer_t1 = get_xyzR_lines(dimer_array_t1,file_description+'_t1',machine_type)
     
     gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_t1 + ['\n\n--Link1--\n'] + line_list_dimer_p1 + ['\n\n--Link1--\n'] + line_list_dimer_p2 + ['\n\n\n']
     
@@ -172,7 +176,7 @@ def exec_gjf(auto_dir, monomer_name, params_dict, machine_type,isTest=True):
     with open(xyz_path,'w') as f:
         f.writelines(xyz_list)
     
-    file_name = make_gjf_xyz(auto_dir, monomer_name, params_dict)
+    file_name = make_gjf_xyz(auto_dir, monomer_name, params_dict,machine_type)
     cc_list = get_one_exe(file_name,machine_type)
     sh_filename = os.path.splitext(file_name)[0]+'.r1'
     sh_path = os.path.join(inp_dir,sh_filename)
