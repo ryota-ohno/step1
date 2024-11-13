@@ -119,7 +119,7 @@ def make_xyz(monomer_name,params_dict):
         xyzfile_name += '_{}={}'.format(key,val)
     return xyzfile_name + '.xyz'
 
-def make_gjf_xyz(auto_dir,monomer_name,params_dict,isInterlayer):
+def make_gjf_xyz(auto_dir,monomer_name,params_dict):
     a_ = params_dict['a']; b_ = params_dict['b']; c = np.array([params_dict.get('cx',0.0),params_dict.get('cy',0.0),params_dict.get('cz',0.0)])
     A2 = params_dict.get('A2',0.0); A3 = params_dict['theta']
     
@@ -140,8 +140,7 @@ def make_gjf_xyz(auto_dir,monomer_name,params_dict,isInterlayer):
     line_list_dimer_p2 = get_xyzR_lines(dimer_array_p2,file_description+'_p2')
     line_list_dimer_t1 = get_xyzR_lines(dimer_array_t1,file_description+'_t1')
     
-    if monomer_name in MONOMER_LIST and not(isInterlayer):##隣接8分子について対称性より3分子でエネルギー計算
-        gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_t1 + ['\n\n--Link1--\n'] + line_list_dimer_p1 + ['\n\n--Link1--\n'] + line_list_dimer_p2 + ['\n\n\n']
+    gij_xyz_lines = ['$ RunGauss\n'] + line_list_dimer_t1 + ['\n\n--Link1--\n'] + line_list_dimer_p1 + ['\n\n--Link1--\n'] + line_list_dimer_p2 + ['\n\n\n']
     
     file_name = get_file_name_from_dict(monomer_name,params_dict)
     os.makedirs(os.path.join(auto_dir,'gaussian'),exist_ok=True)
@@ -162,18 +161,18 @@ def get_file_name_from_dict(monomer_name,params_dict):
         file_name += '_{}={}'.format(key,val)
     return file_name + '.inp'
     
-def exec_gjf(auto_dir, monomer_name, params_dict, machine_type,isInterlayer,isTest=True):
+def exec_gjf(auto_dir, monomer_name, params_dict, machine_type,isTest=True):
     inp_dir = os.path.join(auto_dir,'gaussian')
     xyz_dir = os.path.join(auto_dir,'gaussview')
     print(params_dict)
     
     xyzfile_name = make_xyz(monomer_name, params_dict)
     xyz_path = os.path.join(xyz_dir,xyzfile_name)
-    xyz_list = make_xyzfile(monomer_name,params_dict,isInterlayer=False)
+    xyz_list = make_xyzfile(monomer_name,params_dict)
     with open(xyz_path,'w') as f:
         f.writelines(xyz_list)
     
-    file_name = make_gjf_xyz(auto_dir, monomer_name, params_dict, isInterlayer)
+    file_name = make_gjf_xyz(auto_dir, monomer_name, params_dict)
     cc_list = get_one_exe(file_name,machine_type)
     sh_filename = os.path.splitext(file_name)[0]+'.r1'
     sh_path = os.path.join(inp_dir,sh_filename)
