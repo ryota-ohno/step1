@@ -98,10 +98,10 @@ def make_xyzfile(monomer_name,params_dict):
     monomer_array_p2 = get_monomer_xyzR(monomer_name,0,-b_,0,A2,A3)##1,2がb方向
     monomer_array_p3 = get_monomer_xyzR(monomer_name,a_,0,0,A2,A3)##3,4がa方向
     monomer_array_p4 = get_monomer_xyzR(monomer_name,-a_,0,0,A2,A3)##3,4がa方向
-    monomer_array_t1 = get_monomer_xyzR(monomer_name,a_/2,b_/2,0,-A2,-A3)
-    monomer_array_t2 = get_monomer_xyzR(monomer_name,a_/2,-b_/2,0,-A2,-A3)
-    monomer_array_t3 = get_monomer_xyzR(monomer_name,-a_/2,-b_/2,0,-A2,-A3)
-    monomer_array_t4 = get_monomer_xyzR(monomer_name,-a_/2,b_/2,0,-A2,-A3)
+    monomer_array_t1 = get_monomer_xyzR(monomer_name,a_/2,b_/2,0,A2,-A3)
+    monomer_array_t2 = get_monomer_xyzR(monomer_name,a_/2,-b_/2,0,A2,-A3)
+    monomer_array_t3 = get_monomer_xyzR(monomer_name,-a_/2,-b_/2,0,A2,-A3)
+    monomer_array_t4 = get_monomer_xyzR(monomer_name,-a_/2,b_/2,0,A2,-A3)
     xyz_list=['400 \n','polyacene9 \n']##4分子のxyzファイルを作成
     monomers_array_4 = np.concatenate([monomer_array_i,monomer_array_p1,monomer_array_p3,monomer_array_p2,monomer_array_p4,monomer_array_t1,monomer_array_t2,monomer_array_t3,monomer_array_t4],axis=0)
     
@@ -132,7 +132,7 @@ def make_gjf_xyz(auto_dir,monomer_name,params_dict,machine_type):
     monomer_array_p1 = get_monomer_xyzR(monomer_name,0,b_,0,A2,A3)##p1がb方向
     
     monomer_array_p2 = get_monomer_xyzR(monomer_name,a_,0,0,A2,A3)##p2がa方向
-    monomer_array_t1 = get_monomer_xyzR(monomer_name,a_/2,b_/2,0,-A2,-A3)
+    monomer_array_t1 = get_monomer_xyzR(monomer_name,a_/2,b_/2,0,A2,-A3)
     
     
     dimer_array_t1 = np.concatenate([monomer_array_i,monomer_array_t1])
